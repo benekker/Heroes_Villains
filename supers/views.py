@@ -1,4 +1,3 @@
-import stat
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Super
@@ -12,10 +11,12 @@ from django.shortcuts import get_object_or_404
 def supers_list(request):
 
     if request.method == GET:
-        supers = Super.objects.filter()
-        serializer = SuperSerializer
-
-        
+        supers_param = request.query_params.get('type')
+        supers = Super.objects.all()
+        if supers_param:
+            supers = supers.filter(super_type__type = supers_param)
+        serializer = SuperSerializer(supers, many=True)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)      
     elif request.method == POST:
         serializer = SuperSerializer(data = request.data)
         serializer.is_valid(raise_exception=True)
