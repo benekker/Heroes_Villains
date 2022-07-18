@@ -25,7 +25,7 @@ def supers_list(request):
 
 @api_view([GET, PUT, DELETE])
 def get_super_by_id(request, pk):
-    super = get_object_or_404(super, pk=pk)
+    super = get_object_or_404(Super, pk=pk)
     if request.method == GET:
         serializer = SuperSerializer(super)
         return Response(serializer.data, status=status.HTTP_200_OK)
