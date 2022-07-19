@@ -9,7 +9,6 @@ from dictionary import heroes_dict, villains_dict
 
 @api_view([GET, POST])
 def supers_list(request):
-
     if request.method == GET:
         heroes = Super.objects.filter(super_type_id = 1)
         villains = Super.objects.filter(super_type_id = 2)
